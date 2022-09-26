@@ -1,18 +1,18 @@
 public class Course {
     string name;
-    string[] domains;
+    string domain;
 
-    public Course(string courseName, string[] courseDomains) {
+    public Course(string courseName, string courseDomain) {
         name = courseName;
-        domains = courseDomains;
+        domain = courseDomain;
     }
 
-    public static Course[] createListOfCourses(string[] names, string[][] courseDomains) {
+    public static Course[] createListOfCourses(string[] names, string[] courseDomain) {
         int len = names.Length;
         Course[] courses = {};
 
         for (int i = 0; i < len; i++)
-            courses.Append(new Course(names[i], courseDomains[i]));
+            courses.Append(new Course(names[i], courseDomain[i]));
 
         return courses;
     }
