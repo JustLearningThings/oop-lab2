@@ -1,4 +1,4 @@
-class HR {
+class HR : Person {
     public string name { get; init; }
     public string company { get; set; }
     public Project[] projects { get; set; }
@@ -6,8 +6,18 @@ class HR {
     private string[] desiredSkills { get; set; }
     private int threshold { get; set; }
 
-    HR(string HRname, string HRcompany, Project[] HRprojects, string[] HRDesiredSkills = null) {
-        name = HRname;
+    HR(
+        string HRFirstName,
+        string HRLastName,
+        int HRAge,
+        int HRYearsOfXP,
+        string HRcompany,
+        Project[] HRprojects,
+        string[] HRDesiredSkills = null) : base (HRFirstName,
+                                                 HRLastName,
+                                                 HRAge,
+                                                 HRYearsOfXP) {
+
         company = HRcompany;
         projects = HRprojects;
 

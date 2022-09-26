@@ -1,8 +1,4 @@
-public class Employee {
-    public string firstName { get; init; }
-    public string lastName { get; init; }
-    public int age { get; init; }
-    public int yearsOfXP { get; init; }
+public class Employee : Person {
     public int desiredSalary { get; set; }
     public Skill[] skills { get; set; }
     public ProgrammingLanguage[] programmingLanguages { get; set; }
@@ -27,12 +23,11 @@ public class Employee {
                     string[] courseDomains = null,
                     string[] contestNames = null,
                     DateTime[] contestDates = null,
-                    string[] contestDomains = null) {
+                    string[] contestDomains = null) : base (employeeFirstName,
+                                                            employeeLastName,
+                                                            employeeAge,
+                                                            employeeYearsOfXP) {
 
-        firstName = employeeFirstName;
-        lastName = employeeLastName;
-        age = employeeAge;
-        yearsOfXP = employeeYearsOfXP;
         desiredSalary = employeeDesiredSalary;
 
         if (skillNames != null && skillNames.Length > 0 &&
@@ -62,9 +57,5 @@ public class Employee {
             contestDomains != null && contestDomains.Length > 0)
 
                 contests = Contest.createListOfContests(contestNames, contestDates, contestDomains);
-    }
-
-    private bool _checkAge() {
-        return this.age + 18 > this.yearsOfXP;
     }
 }
