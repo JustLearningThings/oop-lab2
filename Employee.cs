@@ -7,6 +7,7 @@ public class Employee {
     public Skill[] skills { get; set; }
     public ProgrammingLanguage[] programmingLanguages { get; set; }
     public Project[] pastProjects { get; set; }
+    public Course[] courses;
 
     public Employee(string employeeFirstName,
                     string employeeLastName,
@@ -20,7 +21,9 @@ public class Employee {
                     string[][] plDomains = null,
                     string[] projectNames = null,
                     string[] projectLanguages = null,
-                    string[] projectDomains = null) {
+                    string[] projectDomains = null,
+                    string[] courseNames = null,
+                    string[][] courseDomains = null) {
 
         firstName = employeeFirstName;
         lastName = employeeLastName;
@@ -39,11 +42,16 @@ public class Employee {
 
             programmingLanguages = ProgrammingLanguage.createListOfLanguages(plNames, plDomains);
 
-        if (projectNames != null && projectDomains.Length > 0 &&
+        if (projectNames != null && projectNames.Length > 0 &&
             projectLanguages != null && projectLanguages.Length > 0 &&
             projectDomains != null && projectDomains.Length > 0)
 
                 pastProjects = Project.createListOfProjects(projectNames, projectLanguages, projectDomains);
+        
+        if (courseNames != null && courseNames.Length > 0 &&
+            courseDomains != null && courseDomains.Length > 0 &&)
+
+                courses = Course.createListOfCourses(courseNames, courseDomains);
     }
 
     private bool _checkAge() {
