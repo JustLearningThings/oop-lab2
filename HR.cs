@@ -1,5 +1,4 @@
 class HR : Person {
-    public string name { get; init; }
     public string company { get; set; }
     public Project[] projects { get; set; }
     public Offer[] offers { get; set; }

@@ -3,8 +3,8 @@ public class Employee : Person {
     public Skill[] skills { get; set; }
     public ProgrammingLanguage[] programmingLanguages { get; set; }
     public Project[] pastProjects { get; set; }
-    public Course[] courses;
-    public Contest[] contests;
+    public Course[] courses { get; set; }
+    public Contest[] contests { get; set; }
 
     public Employee(string employeeFirstName,
                     string employeeLastName,
