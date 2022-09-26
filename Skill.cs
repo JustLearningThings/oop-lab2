@@ -37,4 +37,9 @@ public class Skill {
 
         return SList;
     }
+
+    // used by HR
+    public static int evaluateHardness(bool isHard) {
+        return isHard ? 1 : 0;
+    }
 }

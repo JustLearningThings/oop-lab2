@@ -19,5 +19,15 @@ public class Project {
         return Projects;
     }
 
-    // extend domain()
+    // get domains of multiple projects in order to make comparisons 
+    public static string[] collectDomains(Project[] projects) {
+        string[] domains = {};
+
+        foreach(Project project in projects)
+            domains.Append(project.domain);
+
+        return domains;
+    }
+
+    // extend domain
 }
