@@ -2,6 +2,7 @@ class HR {
     public string name { get; init; }
     public string company { get; set; }
     public Project[] projects { get; set; }
+    public Offer[] offers { get; set; }
     private string[] desiredSkills { get; set; }
     private int threshold { get; set; }
 

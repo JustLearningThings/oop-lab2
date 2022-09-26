@@ -3,6 +3,7 @@ public class Employee {
     public string lastName { get; init; }
     public int age { get; init; }
     public int yearsOfXP { get; init; }
+    public int desiredSalary { get; set; }
     public Skill[] skills { get; set; }
     public ProgrammingLanguage[] programmingLanguages { get; set; }
     public Project[] pastProjects { get; set; }
@@ -11,6 +12,7 @@ public class Employee {
                     string employeeLastName,
                     int employeeAge,
                     int employeeYearsOfXP,
+                    int employeeDesiredSalary,
                     string[] skillNames = null,
                     int[] skillRarities = null,
                     bool[] skillIsHard = null,
@@ -24,6 +26,7 @@ public class Employee {
         lastName = employeeLastName;
         age = employeeAge;
         yearsOfXP = employeeYearsOfXP;
+        desiredSalary = employeeDesiredSalary;
 
         if (skillNames != null && skillNames.Length > 0 &&
            skillRarities != null && skillRarities.Length > 0 &&

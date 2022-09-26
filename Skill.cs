@@ -1,22 +1,3 @@
-// abstract class Skills {
-//     public string[] skillNames;
-
-//     public Skills(string[] SskillNames) {
-//         skillNames = SskillNames;
-//     }
-
-//     // look how many preffered skills does the person have
-//     public int calculatePoints(string[] skills) {
-//         int count = 0;
-
-//         foreach(string skill in skills)
-//             if (this.skillNames.Contains(skill))
-//             count++;
-
-//         return count;
-//     }
-// }
-
 public class Skill {
     public string name { get; init; }
     public int rarity { get; init; }

@@ -1,7 +1,7 @@
 public class Project {
     public string name { get; init; }
     public string language { get; init; }
-    public string domain { get; init; }
+    public string domain { get; set; }
 
     Project(string Pname, string Planguage, string Pdomain) {
         name = Pname;
@@ -28,6 +28,4 @@ public class Project {
 
         return domains;
     }
-
-    // extend domain
 }
