@@ -11,24 +11,30 @@ public class Employee : Person {
                     int employeeAge,
                     int employeeYearsOfXP,
                     int employeeDesiredSalary,
-                    string[] skillNames = null,
-                    int[] skillRarities = null,
-                    bool[] skillIsHard = null,
-                    string[] plNames = null,
-                    string[][] plDomains = null,
-                    string[] projectNames = null,
-                    string[] projectLanguages = null,
-                    string[] projectDomains = null,
-                    string[] courseNames = null,
-                    string[] courseDomains = null,
-                    string[] contestNames = null,
-                    DateTime[] contestDates = null,
-                    string[] contestDomains = null) : base (employeeFirstName,
+                    string[] skillNames,
+                    int[] skillRarities,
+                    bool[] skillIsHard,
+                    string[] plNames,
+                    string[][] plDomains,
+                    string[] projectNames,
+                    string[] projectLanguages,
+                    string[] projectDomains,
+                    string[] courseNames,
+                    string[] courseDomains,
+                    string[] contestNames,
+                    DateTime[] contestDates,
+                    string[] contestDomains) : base (employeeFirstName,
                                                             employeeLastName,
                                                             employeeAge,
                                                             employeeYearsOfXP) {
 
         desiredSalary = employeeDesiredSalary;
+
+        skills = new Skill[] {};
+        programmingLanguages = new ProgrammingLanguage[] {};
+        pastProjects = new Project[] {};
+        courses = new Course[] {};
+        contests = new Contest[] {};
 
         if (skillNames != null && skillNames.Length > 0 &&
            skillRarities != null && skillRarities.Length > 0 &&

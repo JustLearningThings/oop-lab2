@@ -2,23 +2,25 @@ class HR : Person {
     public string company { get; set; }
     public Project[] projects { get; set; }
     public Offer[] offers { get; set; }
-    private string[] desiredSkills { get; set; }
+    public string[] desiredSkills { get; set; }
     private int threshold { get; set; }
 
-    HR(
+    public HR(
         string HRFirstName,
         string HRLastName,
         int HRAge,
         int HRYearsOfXP,
         string HRcompany,
         Project[] HRprojects,
-        string[] HRDesiredSkills = null) : base (HRFirstName,
+        string[] HRDesiredSkills) : base (HRFirstName,
                                                  HRLastName,
                                                  HRAge,
                                                  HRYearsOfXP) {
 
         company = HRcompany;
         projects = HRprojects;
+        
+        offers = new Offer[] {};
 
         threshold = 5; // 5 points or more to hire
 
