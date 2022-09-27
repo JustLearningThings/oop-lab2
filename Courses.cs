@@ -7,12 +7,12 @@ public class Course {
         domain = courseDomain;
     }
 
-    public static Course[] createListOfCourses(string[] names, string[] courseDomain) {
+    public static List<Course> createListOfCourses(string[] names, string[] courseDomain) {
         int len = names.Length;
-        Course[] courses = {};
+        List<Course> courses = new List<Course>();
 
         for (int i = 0; i < len; i++)
-            courses.Append(new Course(names[i], courseDomain[i]));
+            courses.Add(new Course(names[i], courseDomain[i]));
 
         return courses;
     }

@@ -9,12 +9,12 @@ public class Skill {
         isHardSkill = skillIsHardSkill;
     }
 
-    public static Skill[] createListOfSkills(string[] names, int[] rarity, bool[] isHard) {
+    public static List<Skill> createListOfSkills(string[] names, int[] rarity, bool[] isHard) {
         int len = names.Length;
-        Skill[] SList = {};
+        List<Skill> SList = new List<Skill>();
 
         for (int i = 0; i < len; i++)
-            SList.Append(new Skill(names[i], rarity[i], isHard[i]));
+            SList.Add(new Skill(names[i], rarity[i], isHard[i]));
 
         return SList;
     }

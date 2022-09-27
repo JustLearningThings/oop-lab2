@@ -1,6 +1,6 @@
 class HR : Person {
     public string company { get; set; }
-    public Project[] projects { get; set; }
+    public List<Project> projects { get; set; }
     public Offer[] offers { get; set; }
     public string[] desiredSkills { get; set; }
     private int threshold { get; set; }
@@ -11,7 +11,7 @@ class HR : Person {
         int HRAge,
         int HRYearsOfXP,
         string HRcompany,
-        Project[] HRprojects,
+        List<Project> HRprojects,
         string[] HRDesiredSkills) : base (HRFirstName,
                                                  HRLastName,
                                                  HRAge,

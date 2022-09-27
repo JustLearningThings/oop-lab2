@@ -9,12 +9,12 @@ public class Contest {
         domain = contesetDomain;
     }
 
-    public static Contest[] createListOfContests(string[] names, DateTime[] recieveDates, string[] contestDomains) {
+    public static List<Contest> createListOfContests(string[] names, DateTime[] recieveDates, string[] contestDomains) {
         int len = names.Length;
-        Contest[] contests = {};
+        List<Contest> contests = new List<Contest>();
 
         for (int i = 0; i < len; i++)
-            contests.Append(new Contest(names[i], recieveDates[i], contestDomains[i]));
+            contests.Add(new Contest(names[i], recieveDates[i], contestDomains[i]));
 
         return contests;
     }

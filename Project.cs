@@ -9,18 +9,18 @@ public class Project {
         domain = Pdomain;
     }
 
-    public static Project[] createListOfProjects(string[] names, string[] languages, string[] domains) {
+    public static List<Project> createListOfProjects(string[] names, string[] languages, string[] domains) {
         int len = names.Length;
-        Project[] Projects = {};
+        List<Project> Projects = new List<Project>();
 
         for (int i = 0; i < len; i++)
-            Projects.Append(new Project(names[i], languages[i], domains[i]));
+            Projects.Add(new Project(names[i], languages[i], domains[i]));
         
         return Projects;
     }
 
     // get domains of multiple projects in order to make comparisons 
-    public static string[] collectDomains(Project[] projects) {
+    public static string[] collectDomains(List<Project> projects) {
         string[] domains = {};
 
         foreach(Project project in projects)

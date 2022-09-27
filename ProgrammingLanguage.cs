@@ -7,12 +7,13 @@ public class ProgrammingLanguage {
         domains = PLdomains;
     }
 
-    public static ProgrammingLanguage[] createListOfLanguages(string[] names, string[][] domains) {
+    // public static ProgrammingLanguage[] createListOfLanguages(string[] names, string[][] domains) {
+        public static List<ProgrammingLanguage> createListOfLanguages(string[] names, string[][] domains) {
         int len = names.Length;
-        ProgrammingLanguage[] PLList = {};
+        List<ProgrammingLanguage> PLList = new List<ProgrammingLanguage>();
 
         for (int i = 0; i < len; i++)
-            PLList.Append(new ProgrammingLanguage(names[i], domains[i]));
+            PLList.Add(new ProgrammingLanguage(names[i], domains[i]));
 
         return PLList;
     }

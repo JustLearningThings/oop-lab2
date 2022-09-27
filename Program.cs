@@ -44,7 +44,7 @@
 //     22,
 //     3,
 //     "Endava",
-//     new Project[] {},
+//     new List<Project> {},
 //     new string[] {"teamwork", "planning"}
 // );
 
@@ -56,22 +56,20 @@
 
 
 // Testing ProgrammingLanguage
-ProgrammingLanguage c_reshotka = new ProgrammingLanguage("c#", new string[] {"backend", "game dev"});
+// ProgrammingLanguage c_reshotka = new ProgrammingLanguage("c#", new string[] {"backend", "game dev"});
 
-Console.WriteLine(c_reshotka.name + " is used in:");
+// Console.WriteLine(c_reshotka.name + " is used in:");
 
-foreach(var d in c_reshotka.domains)
-    Console.WriteLine(" > " + d);
+// foreach(var d in c_reshotka.domains)
+//     Console.WriteLine(" > " + d);
 
 
-string[][] PLDomains = new string[][] {
-    new string[] {"backend", "game dev"},
-    new string[] {"frontend", "backend"}
-};
+// string[][] PLDomains = new string[][] {
+//     new string[] {"backend", "game dev"},
+//     new string[] {"frontend", "backend"}
+// };
 
-Console.WriteLine(
-    ProgrammingLanguage.createListOfLanguages(
-        new string[] {"c#", "js"},
-        PLDomains
-    )
-);
+// List<ProgrammingLanguage> languages = ProgrammingLanguage.createListOfLanguages(new string[] {"c#", "js"}, PLDomains);
+
+// foreach(var lang in languages)
+//     Console.WriteLine(lang.name);

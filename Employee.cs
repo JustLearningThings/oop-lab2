@@ -1,10 +1,11 @@
 public class Employee : Person {
     public int desiredSalary { get; set; }
-    public Skill[] skills { get; set; }
-    public ProgrammingLanguage[] programmingLanguages { get; set; }
-    public Project[] pastProjects { get; set; }
-    public Course[] courses { get; set; }
-    public Contest[] contests { get; set; }
+    public List<Skill> skills { get; set; }
+    // public ProgrammingLanguage[] programmingLanguages { get; set; }
+    public List<ProgrammingLanguage> programmingLanguages { get; set; }
+    public List<Project> pastProjects { get; set; }
+    public List<Course> courses { get; set; }
+    public List<Contest> contests { get; set; }
 
     public Employee(string employeeFirstName,
                     string employeeLastName,
@@ -30,11 +31,11 @@ public class Employee : Person {
 
         desiredSalary = employeeDesiredSalary;
 
-        skills = new Skill[] {};
-        programmingLanguages = new ProgrammingLanguage[] {};
-        pastProjects = new Project[] {};
-        courses = new Course[] {};
-        contests = new Contest[] {};
+        skills = new List<Skill>();
+        programmingLanguages = new List<ProgrammingLanguage>();
+        pastProjects = new List<Project>();
+        courses = new List<Course>();
+        contests = new List<Contest>();
 
         if (skillNames != null && skillNames.Length > 0 &&
            skillRarities != null && skillRarities.Length > 0 &&
