@@ -31,35 +31,41 @@ The employee is a versatile type of person. He or she has many skills, including
 ```cs
 public class Employee : Person {
     public int desiredSalary { get; set; }
-    public Skill[] skills { get; set; }
-    public ProgrammingLanguage[] programmingLanguages { get; set; }
-    public Project[] pastProjects { get; set; }
-    public Course[] courses { get; set; }
-    public Contest[] contests {get; set; }
+    public List<Skill> skills { get; set; }
+    public List<ProgrammingLanguage> programmingLanguages { get; set; }
+    public List<Project> pastProjects { get; set; }
+    public List<Course> courses { get; set; }
+    public List<Contest> contests { get; set; }
 
     public Employee(string employeeFirstName,
                     string employeeLastName,
                     int employeeAge,
                     int employeeYearsOfXP,
                     int employeeDesiredSalary,
-                    string[] skillNames = null,
-                    int[] skillRarities = null,
-                    bool[] skillIsHard = null,
-                    string[] plNames = null,
-                    string[][] plDomains = null,
-                    string[] projectNames = null,
-                    string[] projectLanguages = null,
-                    string[] projectDomains = null,
-                    string[] courseNames = null,
-                    string[] courseDomains = null,
-                    string[] contestNames = null,
-                    DateTime[] contestDates = null,
-                    string[] contestDomains = null) : base (employeeFirstName,
+                    string[] skillNames,
+                    int[] skillRarities,
+                    bool[] skillIsHard,
+                    string[] plNames,
+                    string[][] plDomains,
+                    string[] projectNames,
+                    string[] projectLanguages,
+                    string[] projectDomains,
+                    string[] courseNames,
+                    string[] courseDomains,
+                    string[] contestNames,
+                    DateTime[] contestDates,
+                    string[] contestDomains) : base (employeeFirstName,
                                                             employeeLastName,
                                                             employeeAge,
                                                             employeeYearsOfXP) {
 
         desiredSalary = employeeDesiredSalary;
+
+        skills = new List<Skill>();
+        programmingLanguages = new List<ProgrammingLanguage>();
+        pastProjects = new List<Project>();
+        courses = new List<Course>();
+        contests = new List<Contest>();
 
         if (skillNames != null && skillNames.Length > 0 &&
            skillRarities != null && skillRarities.Length > 0 &&
@@ -78,24 +84,34 @@ HR has a list of projects the company is interested in. Also he or she has a lis
 ```cs
 class HR : Person {
     public string company { get; set; }
-    public Project[] projects { get; set; }
+    public List<Project> projects { get; set; }
     public Offer[] offers { get; set; }
-    private string[] desiredSkills { get; set; }
+    public string[] desiredSkills { get; set; }
     private int threshold { get; set; }
 
-    HR(
+    public HR(
         string HRFirstName,
         string HRLastName,
         int HRAge,
         int HRYearsOfXP,
         string HRcompany,
-        Project[] HRprojects,
-        string[] HRDesiredSkills = null) : base (HRFirstName,
+        List<Project> HRprojects,
+        string[] HRDesiredSkills) : base (HRFirstName,
                                                  HRLastName,
                                                  HRAge,
                                                  HRYearsOfXP) {
 
-        ...
+        company = HRcompany;
+        projects = HRprojects;
+        
+        offers = new Offer[] {};
+
+        threshold = 5; // 5 points or more to hire
+
+        if (HRDesiredSkills != null && HRDesiredSkills.Length > 0)
+            desiredSkills = HRDesiredSkills;
+        else
+            desiredSkills = new string[] {};
     }
 
     // evaluate an employee (hire or not hire)
@@ -125,7 +141,7 @@ public class Skill {
 
     public Skill(string skillName, int skillRarity, bool skillIsHardSkill) { ... }
 
-    public static Skill[] createListOfSkills(string[] names, int[] rarity, bool[] isHard) { ... }
+    public static List<Skill> createListOfSkills(string[] names, int[] rarity, bool[] isHard) { ... }
 
     // used by HR
     public static int evaluateHardness(bool isHard) { ... }
@@ -142,7 +158,7 @@ public class Course {
 
     public Course(string courseName, string courseDomain) { ... }
 
-    public static Course[] createListOfCourses(string[] names, string[] courseDomain) { ... }
+    public static List<Course> createListOfCourses(string[] names, string[] courseDomain) { ... }
 
     public static string[] extractDomains(Course[] courses) { ... }
 }
@@ -159,7 +175,7 @@ public class Contest {
     
     public Contest(string contestName, DateTime contestReceivedAt, string contesetDomain) { ... }
 
-    public static Contest[] createListOfContests(string[] names, DateTime[] recieveDates, string[] contestDomains) { ... }
+    public static List<Contest> createListOfContests(string[] names, DateTime[] recieveDates, string[] contestDomains) { ... }
 }
 ```
 
@@ -174,7 +190,7 @@ public class Project {
 
     Project(string Pname, string Planguage, string Pdomain) { ... }
 
-    public static Project[] createListOfProjects(string[] names, string[] languages, string[] domains) { ... }
+    public static List<Project> createListOfProjects(string[] names, string[] languages, string[] domains) { ... }
 
     // get domains of multiple projects in order to make comparisons 
     public static string[] collectDomains(Project[] projects) { ... }
@@ -191,7 +207,7 @@ public class ProgrammingLanguage {
 
     public ProgrammingLanguage(string PLName, string[] PLdomains) { ... }
 
-    public static ProgrammingLanguage[] createListOfLanguages(string[] names, string[][] domains) { ... }
+    public static List<ProgrammingLanguage> createListOfLanguages(string[] names, string[][] domains) { ... }
 
     // check if the name matches the hr's desired language
     // and that domains are the same
