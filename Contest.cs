@@ -1,12 +1,9 @@
-public class Contest {
-    string name { get; init; }
+public class Contest : SelectionEntity {
     DateTime receivedAt { get; init; }
-    string domain;
     
-    public Contest(string contestName, DateTime contestReceivedAt, string contesetDomain) {
-        name = contestName;
+    public Contest(string contestName, DateTime contestReceivedAt, string contesetDomain)
+                : base(contestName, contesetDomain) {
         receivedAt = contestReceivedAt;
-        domain = contesetDomain;
     }
 
     public static List<Contest> createListOfContests(string[] names, DateTime[] recieveDates, string[] contestDomains) {
