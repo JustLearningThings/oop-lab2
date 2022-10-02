@@ -1,4 +1,4 @@
-public class Person {
+public class Person : SimulationEntity {
     public string firstName { get; init; }
     public string lastName { get; init; }
     public int age { get; init; }

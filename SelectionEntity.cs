@@ -1,4 +1,4 @@
-public abstract class SelectionEntity {
+public abstract class SelectionEntity : SimulationEntity {
     public string name { get; init; }
     public string domain { get; set; }
     public string[] domains { get; set; }
