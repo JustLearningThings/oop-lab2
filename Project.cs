@@ -1,12 +1,9 @@
-public class Project {
-    public string name { get; init; }
+public class Project : SelectionEntity {
     public string language { get; init; }
-    public string domain { get; set; }
 
-    Project(string Pname, string Planguage, string Pdomain) {
-        name = Pname;
+    public Project(string Pname, string Planguage, string Pdomain)
+            : base(Pname, Pdomain) {
         language = Planguage;
-        domain = Pdomain;
     }
 
     public static List<Project> createListOfProjects(string[] names, string[] languages, string[] domains) {
