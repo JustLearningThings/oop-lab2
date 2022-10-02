@@ -1,11 +1,6 @@
-public class Course {
-    string name;
-    string domain;
-
-    public Course(string courseName, string courseDomain) {
-        name = courseName;
-        domain = courseDomain;
-    }
+public class Course : SelectionEntity {
+    public Course(string courseName, string courseDomain)
+            : base (courseName, courseDomain) {}
 
     public static List<Course> createListOfCourses(string[] names, string[] courseDomain) {
         int len = names.Length;
