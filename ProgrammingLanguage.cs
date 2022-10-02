@@ -1,8 +1,6 @@
-public class ProgrammingLanguage {
-    public string name { get; init; }
-    public string[] domains { get; set; }
-
-    public ProgrammingLanguage(string PLName, string[] PLdomains) {
+public class ProgrammingLanguage : SelectionEntity {
+    public ProgrammingLanguage(string PLName, string[] PLdomains)
+            : base(PLName, PLdomains) {
         name = PLName;
         domains = PLdomains;
     }
