@@ -1,6 +1,83 @@
 # Simulating the hiring process in IT
 I chose to simulate the hiring process. For this purpose I thought of 9 classes that are related to the hiring process and one class that will perform the simulation.
 
+# Lab 3
+For this laboratory work I had to think of a way so that every class will inherit from a root class, having another inheritance layer between them.
+
+Here is the inheritance diagram:
+![Inheritane Diagram](./Inheritance.png)
+
+## Simulation root class
+
+Let's start with the root:
+
+`Simulation` class is looking like this:
+```cs
+public abstract class SimulationEntity {
+    public int numInteractions { get; set; } = 0;
+}
+```
+The only thing in common to all the actors are the num of interactions with other actors that will be counted. This is for statistics.
+
+## SelectionEntity class
+`SelectionEntity` is storing information of all that classes that will be used to seelct an employee by an hr for a position. This class looks like this:
+
+```cs
+public abstract class SelectionEntity : SimulationEntity {
+    public string name { get; init; }
+    public string domain { get; set; }
+    public string[] domains { get; set; }
+
+    protected SelectionEntity(string entityName, string entityDomain) { ... }
+
+    // same constuctor, different signature
+    protected SelectionEntity(string entityName, string[] entityDomains) { ... }
+}
+```
+As you can see it has two constructor signatures. It is due to the fact that the `ProgrammingLanguage` class requires a list of domains, contrary to all the other classes that require a single domain. This is because programming languages can be used in multiple domains.
+
+## SelectionEnvironment
+Classes that inherit from `SelectionEnvironment` are the 'sandboxes', where employees will find jobs. It is the bridge between an employee and an hr. They will find each other through `Offer`s from `JobSite`s and then begin interaction.
+
+Here is how this class looks like:
+
+```cs
+public abstract class SelectionEnvironment : SimulationEntity {
+    public string country { get; init; }
+    public string url { get; init; }
+
+    protected SelectionEnvironment(string envCountry, string envUrl) { ... }
+}
+```
+
+## Person
+This is straightforward. An `Employee` and an `HR` are both persons. They have similar characteristics like `firstName`, `age` or they both have a list of `Project`s.
+
+Here is the class itself:
+
+```cs
+public class Person : SimulationEntity {
+    public string firstName { get; init; }
+    public string lastName { get; init; }
+    public int age { get; init; }
+    public int yearsOfXP { get; init; }
+
+    public List<Project> projects { get; set; }
+    
+    public Person(string personFirstName,
+                    string personLastName,
+                    int personAge,
+                    int personYearsOfXP,
+                    string[] projectNames,
+                    string[] projectLanguages,
+                    string[] projectDomains) { ... }
+    }
+
+    private bool _checkAge() { ... }
+```
+
+# Lab 2
+
 ## Stage 1: the classes
 Let's look closer at each of the classes.
 
