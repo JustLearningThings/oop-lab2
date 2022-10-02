@@ -3,7 +3,7 @@ public class Employee : Person {
     public List<Skill> skills { get; set; }
     // public ProgrammingLanguage[] programmingLanguages { get; set; }
     public List<ProgrammingLanguage> programmingLanguages { get; set; }
-    public List<Project> pastProjects { get; set; }
+    // public List<Project> pastProjects { get; set; }
     public List<Course> courses { get; set; }
     public List<Contest> contests { get; set; }
 
@@ -27,13 +27,15 @@ public class Employee : Person {
                     string[] contestDomains) : base (employeeFirstName,
                                                             employeeLastName,
                                                             employeeAge,
-                                                            employeeYearsOfXP) {
+                                                            employeeYearsOfXP,
+                                                            projectNames,
+                                                            projectLanguages,
+                                                            projectDomains) {
 
         desiredSalary = employeeDesiredSalary;
 
         skills = new List<Skill>();
         programmingLanguages = new List<ProgrammingLanguage>();
-        pastProjects = new List<Project>();
         courses = new List<Course>();
         contests = new List<Contest>();
 
@@ -47,12 +49,6 @@ public class Employee : Person {
             plDomains != null && plDomains.Length > 0)
 
             programmingLanguages = ProgrammingLanguage.createListOfLanguages(plNames, plDomains);
-
-        if (projectNames != null && projectNames.Length > 0 &&
-            projectLanguages != null && projectLanguages.Length > 0 &&
-            projectDomains != null && projectDomains.Length > 0)
-
-                pastProjects = Project.createListOfProjects(projectNames, projectLanguages, projectDomains);
         
         if (courseNames != null && courseNames.Length > 0 &&
             courseDomains != null && courseDomains.Length > 0)

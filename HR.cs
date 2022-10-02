@@ -1,6 +1,6 @@
 class HR : Person {
     public string company { get; set; }
-    public List<Project> projects { get; set; }
+    // public List<Project> projects { get; set; }
     public Offer[] offers { get; set; }
     public string[] desiredSkills { get; set; }
     private int threshold { get; set; }
@@ -11,14 +11,19 @@ class HR : Person {
         int HRAge,
         int HRYearsOfXP,
         string HRcompany,
-        List<Project> HRprojects,
+        string[] projectNames,
+        string[] projectLanguages,
+        string[] projectDomains,
         string[] HRDesiredSkills) : base (HRFirstName,
                                                  HRLastName,
                                                  HRAge,
-                                                 HRYearsOfXP) {
+                                                 HRYearsOfXP,
+                                                 projectNames,
+                                                 projectLanguages,
+                                                 projectDomains) {
 
         company = HRcompany;
-        projects = HRprojects;
+        // projects = HRprojects;
         
         offers = new Offer[] {};
 
@@ -64,7 +69,7 @@ class HR : Person {
                 }
             
             // evaluate domain
-            string[] emplyeeDomains = Project.collectDomains(employee.pastProjects);
+            string[] emplyeeDomains = Project.collectDomains(employee.projects);
             string[] hrDomains = Project.collectDomains(projects);
 
             points += hrDomains.Count(emplyeeDomains.Contains);
