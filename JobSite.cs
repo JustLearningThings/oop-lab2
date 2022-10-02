@@ -1,8 +1,11 @@
-public class JobSite {
+public class JobSite : SelectionEnvironment {
     public string name;
     public Offer[] offers;
 
-    public JobSite(string siteName, Offer[] initialOffers) {
+    public JobSite(string siteName, 
+                    Offer[] initialOffers,
+                    string url,
+                    string country = "Moldova") : base(country, url) {
         name = siteName;
         offers = initialOffers;
     }
