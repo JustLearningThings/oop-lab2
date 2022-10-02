@@ -15,6 +15,7 @@ public class Employee : Person {
                     string[] skillNames,
                     int[] skillRarities,
                     bool[] skillIsHard,
+                    string[] skillDomains,
                     string[] plNames,
                     string[][] plDomains,
                     string[] projectNames,
@@ -43,7 +44,7 @@ public class Employee : Person {
            skillRarities != null && skillRarities.Length > 0 &&
            skillIsHard != null && skillIsHard.Length > 0)
 
-            skills = Skill.createListOfSkills(skillNames, skillRarities, skillIsHard);
+            skills = Skill.createListOfSkills(skillNames, skillRarities, skillIsHard, skillDomains);
 
         if (plNames != null && plNames.Length > 0 &&
             plDomains != null && plDomains.Length > 0)
