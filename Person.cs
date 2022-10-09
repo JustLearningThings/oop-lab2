@@ -6,7 +6,7 @@ public class Person : SimulationEntity {
 
     public List<Project> projects { get; set; }
     
-    public Person(string personFirstName,
+    protected Person(string personFirstName,
                     string personLastName,
                     int personAge,
                     int personYearsOfXP,
