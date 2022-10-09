@@ -1,22 +1,22 @@
 public class JobSite : SelectionEnvironment {
-    public string name;
-    public Offer[] offers;
+    public string name { get; init; }
+    public List<Offer> offers { get; set; }
 
     public JobSite(string siteName, 
-                    Offer[] initialOffers,
+                    List<Offer> initialOffers,
                     string url,
                     string country = "Moldova") : base(country, url) {
         name = siteName;
         offers = initialOffers;
     }
 
-    public void addOffers(Offer[] newOffers) {
+    public void addOffers(List<Offer> newOffers) {
         foreach(Offer offer in newOffers)
-            offers.Append(offer);
+            offers.Add(offer);
     }
 
     // select latest
-    public Offer[] yieldOffers(int n) {
-        return (Offer[])offers.Take(n);
+    public List<Offer> yieldOffers(int n) {
+        return (List<Offer>)offers.Take(n);
     }
 }

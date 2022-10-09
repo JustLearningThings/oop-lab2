@@ -1,6 +1,6 @@
 class HR : Person {
     public string company { get; set; }
-    public Offer[] offers { get; set; }
+    public List<Offer> offers { get; set; }
     public string[] desiredSkills { get; set; }
     private int threshold { get; set; } = 5; // 5 points or more to hire
 
@@ -23,7 +23,7 @@ class HR : Person {
 
         company = HRcompany;
         
-        offers = new Offer[] {};
+        offers = new List<Offer> {};
 
         if (HRDesiredSkills != null && HRDesiredSkills.Length > 0)
             desiredSkills = HRDesiredSkills;
@@ -37,6 +37,9 @@ class HR : Person {
 
         points += _evaluateSkills(employee) + _evaluateProjects(employee);
 
+        numInteractions++;
+        employee.numInteractions++;
+
         return points >= this.threshold;
     }
 
@@ -44,7 +47,10 @@ class HR : Person {
         int points = 0;
 
         // evaluate hrs based on number of offers and number of projects
-        points += offers.Length + projects.Count;
+        points += offers.Count + projects.Count;
+
+        this.increment();
+        employee.numInteractions++;
 
         return points >= this.threshold;
     }
@@ -56,6 +62,9 @@ class HR : Person {
         foreach (Skill skill in employee.skills) {
             if (desiredSkills.Contains(skill.name))
                 points += skill.rarity + Skill.evaluateHardness(skill.isHardSkill);
+
+            skill.numInteractions++;
+            this.increment();
         }
 
         return points;
@@ -70,6 +79,9 @@ class HR : Person {
                 if (language.name.Equals(project.language)) {
                     points++;
 
+                    this.increment();
+                    language.numInteractions++;
+
                     break;
                 }
             
@@ -81,5 +93,27 @@ class HR : Person {
         }
 
         return points;
+    }
+
+    public void createOffer(string title, int salary) {        
+        offers.Add(new Offer(title, salary, "/" + title));
+    }
+
+    public void postOffer(string offerName, JobSite site) {
+        // find offer first
+        Offer? offer = null;
+
+        foreach(Offer o in offers)
+            if (o.title == offerName) {
+                offer = o;
+
+                break;
+            }
+        
+        if (offer == null)
+            return;
+
+        offer.url = site.url + offer.url;
+        site.addOffers(new List<Offer> {offer});
     }
 }
