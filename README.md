@@ -1,6 +1,77 @@
 # Simulating the hiring process in IT
 I chose to simulate the hiring process. For this purpose I thought of 9 classes that are related to the hiring process and one class that will perform the simulation.
 
+# Lab 4
+First two scenarios are related. First I will present them, then I will explain why they work.
+## Scenario 1
+HR evaluates an HR:
+```cs
+HR Aliona = new HR(...);
+HR Maria = new HR(...);
+
+Console.Write("Aliona will hire Maria: ");
+Console.WriteLine(Aliona.evaluate(Maria));
+```
+
+## Scenario 2
+HR evaluates an Employee:
+```cs
+string[][] PLDomains = new string[][] {
+    new string[] {"backend", "game dev"},
+    new string[] {"frontend", "backend"}
+};
+
+Employee Mark = new Employee(...);
+
+Console.Write("Aliona will hire Mark: ");
+Console.WriteLine(Aliona.evaluate(Mark));
+```
+
+As you can see the method of `HR` - `evalute()` - works with both `HR` and `Employee`. It considers individual aspects of both classes. This is why `Person` was not used as a type for the parameter of the method. Instead we have parametric polymorphism:
+
+```cs
+// evaluate an employee (hire or not hire)
+    public bool evaluate(Employee employee) {
+        int points = 0;
+
+        points += _evaluateSkills(employee) + _evaluateProjects(employee);
+
+        return points >= this.threshold;
+    }
+
+    public bool evaluate(HR employee) {
+        int points = 0;
+
+        // evaluate hrs based on number of offers and number of projects
+        points += offers.Length + projects.Count;
+
+        return points >= this.threshold;
+    }
+```
+
+Note that HR interacts with `Skill`s and `Project`s every time it interacts with an `Employee` and it interacts with `Offer`s and `Poject`s every time it interacts with another `HR`.
+
+## Scenario 3
+HR creates an Offer:
+
+```cs
+Aliona.createOffer("Data Engineer", 10_000);
+```
+
+## Scenario 4
+HR posts an Offer on a JobSite:
+
+```cs
+JobSite Rabota = new JobSite(
+    "rabota",
+    new List<Offer> {},
+    "www.rabota.md"
+);
+
+Aliona.postOffer("Data Engineer", Rabota);
+```
+
+
 # Lab 3
 For this laboratory work I had to think of a way so that every class will inherit from a root class, having another inheritance layer between them.
 
