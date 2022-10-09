@@ -1,9 +1,8 @@
 class HR : Person {
     public string company { get; set; }
-    // public List<Project> projects { get; set; }
     public Offer[] offers { get; set; }
     public string[] desiredSkills { get; set; }
-    private int threshold { get; set; }
+    private int threshold { get; set; } = 5; // 5 points or more to hire
 
     public HR(
         string HRFirstName,
@@ -23,11 +22,8 @@ class HR : Person {
                                                  projectDomains) {
 
         company = HRcompany;
-        // projects = HRprojects;
         
         offers = new Offer[] {};
-
-        threshold = 5; // 5 points or more to hire
 
         if (HRDesiredSkills != null && HRDesiredSkills.Length > 0)
             desiredSkills = HRDesiredSkills;
@@ -40,6 +36,15 @@ class HR : Person {
         int points = 0;
 
         points += _evaluateSkills(employee) + _evaluateProjects(employee);
+
+        return points >= this.threshold;
+    }
+
+    public bool evaluate(HR employee) {
+        int points = 0;
+
+        // evaluate hrs based on number of offers and number of projects
+        points += offers.Length + projects.Count;
 
         return points >= this.threshold;
     }

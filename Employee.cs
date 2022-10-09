@@ -1,9 +1,7 @@
 public class Employee : Person {
     public int desiredSalary { get; set; }
     public List<Skill> skills { get; set; }
-    // public ProgrammingLanguage[] programmingLanguages { get; set; }
     public List<ProgrammingLanguage> programmingLanguages { get; set; }
-    // public List<Project> pastProjects { get; set; }
     public List<Course> courses { get; set; }
     public List<Contest> contests { get; set; }
 
