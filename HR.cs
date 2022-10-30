@@ -1,8 +1,8 @@
-class HR : Person {
+public class HR : Person {
     public string company { get; set; }
     public List<Offer> offers { get; set; }
     public string[] desiredSkills { get; set; }
-    private int threshold { get; set; } = 5; // 5 points or more to hire
+    public int threshold { get; set; } = 2; // points or more to hire
 
     public HR(
         string HRFirstName,

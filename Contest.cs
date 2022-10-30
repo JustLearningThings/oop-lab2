@@ -1,5 +1,5 @@
 public class Contest : SelectionEntity {
-    DateTime receivedAt { get; init; }
+    public DateTime receivedAt { get; init; }
     
     public Contest(string contestName, DateTime contestReceivedAt, string contesetDomain)
                 : base(contestName, contesetDomain) {

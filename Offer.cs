@@ -10,6 +10,17 @@ public class Offer : SelectionEnvironment {
         salary = offerSalary;
     }
 
+    public HR? findHR(List<HR> HRs) {
+        foreach(HR hr in HRs) {
+            foreach(Offer o in hr.offers) {
+                if (o.title == this.title)
+                    return hr;
+            }
+        }
+
+        return null;
+    }
+
     public static bool checkEmployeeSalaryMatch(Offer offer, int desiredSalary) {
         return offer.salary >= desiredSalary;
     }

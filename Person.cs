@@ -31,4 +31,8 @@ public class Person : SimulationEntity {
     private bool _checkAge() {
         return this.age + 18 > this.yearsOfXP;
     }
+
+    public string getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
 }
