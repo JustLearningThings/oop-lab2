@@ -1,35 +1,17 @@
 public class HR : Person {
-    public string company { get; set; }
-    public List<Offer> offers { get; set; }
-    public string[] desiredSkills { get; set; }
+    public string? company { get; set; }
+    public List<Offer> offers { get; set; } = new List<Offer>();
+    public string[] desiredSkills { get; set; } = new string[] {};
     public int threshold { get; set; } = 2; // points or more to hire
 
     public HR(
         string HRFirstName,
         string HRLastName,
         int HRAge,
-        int HRYearsOfXP,
-        string HRcompany,
-        string[] projectNames,
-        string[] projectLanguages,
-        string[] projectDomains,
-        string[] HRDesiredSkills) : base (HRFirstName,
-                                                 HRLastName,
-                                                 HRAge,
-                                                 HRYearsOfXP,
-                                                 projectNames,
-                                                 projectLanguages,
-                                                 projectDomains) {
-
-        company = HRcompany;
-        
-        offers = new List<Offer> {};
-
-        if (HRDesiredSkills != null && HRDesiredSkills.Length > 0)
-            desiredSkills = HRDesiredSkills;
-        else
-            desiredSkills = new string[] {};
-    }
+        int HRYearsOfXP) : base (HRFirstName,
+                                HRLastName,
+                                HRAge,
+                                HRYearsOfXP) {}
 
     // evaluate an employee (hire or not hire)
     public bool evaluate(Employee employee) {
@@ -115,5 +97,47 @@ public class HR : Person {
 
         offer.url = site.url + offer.url;
         site.addOffers(new List<Offer> {offer});
+    }
+}
+
+
+
+public interface HRBuilder {
+    void buildPersonalData(string firstName, string lastName);
+    void buildHRData(string company);
+    HR getResult();
+}
+
+public class CommonHRBuilder: HRBuilder {
+    private HR _hr;
+    Random rnd = new Random();
+
+    public void buildPersonalData(string firstName, string lastName) {
+        int HRAge = rnd.Next(18, 65);
+        int HRYearsOfXP = rnd.Next(0, 47);
+
+        _hr = new HR(firstName, lastName, HRAge, HRYearsOfXP);
+    }
+
+    public void buildHRData(string company) {
+        string[] skillNames = new string[] {"teamwork", "punctual", "fast learner"};
+
+        _hr.company = company;
+        // _hr.desiredSkills.Append(skillNames[rnd.Next(0, skillNames.Length - 1)]);
+        _hr.desiredSkills = new string[] {skillNames[rnd.Next(0, skillNames.Length - 1)]};
+    }
+    public HR getResult() {
+        return _hr;
+    }
+}
+
+public class HRDirector {
+    public void populateListOfHRs(HRBuilder builder, List<HR> hrs, int n = 5) {
+        for (int i = 0; i < n; i++) {
+            builder.buildPersonalData("HR", (hrs.Count + 1).ToString());
+            builder.buildHRData("Company" + (hrs.Count + 1).ToString());
+
+            hrs.Add(builder.getResult());
+        }
     }
 }

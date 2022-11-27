@@ -1,3 +1,285 @@
+# Lab 6
+The first thing I did was to incorporate the *Builder* pattern for the main classes of the simulation (`HR` and `Employee`). The reason is that because some of these classes had so many parameters for their constructors my eyes started bleeding. Why not use polymorphism for constructors ? Because I wanted to create different configurations for these objects and have a fast way to create these configurations.
+
+Here is how I did with the `Employee` class. First, I cleared the huge list of parameters and left only the ones constructed by the superclass. And this is the only thing the constructor does. It calls the superclass's constructor. This will aid in creating the necessary builder step. Here is how `Employee` looks like now:
+
+```c#
+public class Employee : Person {
+        public int desiredSalary { get; set; }
+    public List<Skill> skills { get; set; } = new List<Skill>();
+    public List<ProgrammingLanguage> programmingLanguages { get; set; } = new List<ProgrammingLanguage>();
+    public List<Course> courses { get; set; } = new List<Course>();
+    public List<Contest> contests { get; set; } = new List<Contest>();
+    public string? type { get; set; }
+
+    public Employee (
+        string employeeFirstName,
+        string employeeLastName,
+        int employeeAge,
+        int employeeYearsOfXP
+    ) : base (employeeFirstName, employeeLastName, employeeAge, employeeYearsOfXP) {}
+}
+```
+
+Next, I needed to create an interface for the builder class. It goes through every `Employee` creation step deleted earlier from the constructor, but with some changes to make it easier to create such objects. Here it is:
+
+```c#
+public interface EmployeeBuilder {
+    void buildPersonalData(string employeeFirstName, string employeeLastName);
+    void buildSkillsData();
+    void buildProgrammingLanguagesData();
+    void buildProjectsData();
+    void buildCoursesData();
+    void buildContestsData();
+    Employee getResult();
+}
+```
+
+And we have two builders: `WebDeveloperBuilder` and `MLEngineerBuilder`. They differ not too much, so I'll show you the first one only:
+
+```c#
+public class WebDeveloperBuilder: EmployeeBuilder {
+    private Employee _employee;
+    Random rnd = new Random();
+
+    public void buildPersonalData(
+        string employeeFirstName,
+        string employeeLastName
+    ) {
+        int employeeAge = rnd.Next(18, 65);
+        int employeeYearsOfXP = rnd.Next(0, 47);
+        int employeeDesiredSalary = rnd.Next(500, 1_000_000);
+
+        _employee = new Employee(employeeFirstName, employeeLastName, employeeAge, employeeYearsOfXP);
+        _employee.desiredSalary = employeeDesiredSalary;
+    }
+
+    public void buildSkillsData() {
+        string[] skillNames = new string[] {"teamwork", "punctual", "fast learner"};
+        string[] skillDomains = new string[] {"frontend", "backend", "full stack"};
+        bool[] flag = new bool[] {true, false};
+
+        _employee.skills.Add(new Skill(
+            skillNames[rnd.Next(0, skillNames.Length - 1)],
+            rnd.Next(1, 5),
+            flag[rnd.Next(0, 1)],
+            skillDomains[rnd.Next(0, skillDomains.Length - 1)]
+        ));
+    }
+
+    public void buildProgrammingLanguagesData() {
+        // similar to the above
+    }
+
+    public void buildProjectsData() {...}
+
+    public void buildCoursesData() {...}
+
+    public void buildContestsData() {...}
+
+    public Employee getResult() {
+        return _employee;
+    }
+}
+```
+
+For an even easier way of creating `Employee`s (especially when you want to create a certain number of them) I created a director class that will do the thing for me and will return a list of employees:
+
+```c#
+public class EmployeeDirector  {
+    public void populateListOfEmployees(EmployeeBuilder builder, List<Employee> employees, int n = 5, string type = "Web Dev") {
+        for (int i = 0; i < n; i++) {
+            builder.buildPersonalData(type + " Employee", (employees.Count + 1).ToString());
+            builder.buildSkillsData();
+            builder.buildProgrammingLanguagesData();
+            builder.buildProjectsData();
+            builder.buildCoursesData();
+            builder.buildContestsData();
+
+            employees.Add(builder.getResult());
+        }
+    }
+```
+And here is how it is used:
+
+```c#
+List<Employee> employees = new List<Employee>();
+WebDeveloperBuilder builder = new WebDeveloperBuilder();
+MLEngineerBuilder builder2 = new MLEngineerBuilder();
+EmployeeDirector director = new EmployeeDirector();
+
+director.getListOfEmployees(
+    builder,
+    employees
+);
+
+director.getListOfEmployees(
+    builder2,
+    employees,
+    5, "ML"
+);
+
+for (int i = 0; i < 10; i++)
+    Console.WriteLine(employees[i].firstName + " " + employees[i].lastName);
+```
+The result is:
+```
+Web Dev Employee 1
+Web Dev Employee 2
+Web Dev Employee 3
+Web Dev Employee 4
+Web Dev Employee 5
+ML Employee 6
+ML Employee 7
+ML Employee 8
+ML Employee 9
+ML Employee 10
+```
+
+For the `HR` class it is very similar. The difference is that the `HR` class is simpler.
+
+## MVC my program
+For the purpose of integrating an MVC architecture into my simulation many things had to be rearranged, some functions rewritten, something deleted, something added. Let's start from the top to see how the simulation will be run:
+```c#
+Controller simulationController = new Controller();
+
+// configuration (you may leave default values if you want and skip this part)
+simulationController.setHRNum(10);
+simulationController.setOffersPerHR(7);
+simulationController.setSitesNum(2);
+simulationController.setEmployeeNum(20);
+
+// run the simulation (in iterative mode, rather than infinite mode)
+simulationController.simulate(10);
+```
+
+The `View` is the simplest of the 3 in my case. It is responsible for writing text on the screen and for the I/O of the application:
+```c#
+public class View {
+    public void simulationStart() {
+        Console.Clear();
+        Console.WriteLine("====Simulation started====");
+        Console.WriteLine("\tIteration 1");
+        Console.WriteLine("==========================");
+    }
+
+    public void simulationEnd() {
+        Console.WriteLine("====Simulation ended====");
+    }
+
+    public void writeIterationStatistics(int successes, int fails) {
+        Console.Write("There were ");
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.Write("" + (successes + fails));
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write(" jobs applications. Out of them ");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write("" + successes);
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write(" employees were hired and ");
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.Write("" + fails);
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(" were not.");
+    }
+
+    public void renderSimulation(int iterations, ConsoleKey exitKey, Action runIteration) {
+        int i = 0;
+
+        if (iterations == -1)
+            while (true) {
+                if (Console.KeyAvailable && Console.ReadKey(true).Key == exitKey)
+                    break;
+
+                runIteration();
+
+                i++;
+            }
+        else
+            while (i < iterations) {
+                runIteration();
+
+                i++;
+            }
+    }
+}
+```
+
+The `Model` stores the state of the simulation and all the required data. It also has methods that perform all the required data manipulations for the simulation, like creating `Offer`s for `HR`s or putting these offers on a `JobSite`:
+```c#
+public class Model {
+    public List<Employee> employees {get; set;} = new List<Employee>();
+    WebDeveloperBuilder webDevBuilder {get; init;} = new WebDeveloperBuilder();
+    MLEngineerBuilder mlBuilder {get; init;} = new MLEngineerBuilder();
+    EmployeeDirector employeeDirector {get; init;} = new EmployeeDirector();
+
+    public List<HR> hrs {get; set;} = new List<HR>();
+    CommonHRBuilder hrBuilder {get; init;} = new CommonHRBuilder();
+    HRDirector hrDirector {get; init;} = new HRDirector();
+
+    public List<JobSite> sites {get; set;} = new List<JobSite>();
+
+    // simulation state 
+    public int hrNum {get; set;} = 5;
+    public int employeeNum {get; set;} = 5;
+    public int offersPerHR {get; set;} = 5;
+    public int sitesNum {get; set;} = 1;
+
+    private Random rnd = new Random();
+
+    // populates employees and hrs lists with initial values based on the rules
+    // described in the respective builders
+    public void initSimulationState() {...}
+
+    // post state function where each hr creates offers for job sites
+    public void createOffers() {...}
+
+    // post state function where each hr posts the offers created earlier
+    public void postOffers() {...}
+
+    public void removeOffer(JobSite site, HR hr, Offer offer) {...}
+
+    public void levelUpEmployee(Employee employee) {...}
+}
+```
+
+The glue of the above two parts is the `Controller`, which is responsible for running all the steps of the simulation and communicating with the `Model` to access, modify, update or delete data, and communicating with the `View` to display the necessary information for the user:
+```c#
+public class Controller {
+    Model model {get; init;} = new Model();
+    View view {get; init;} = new View();
+
+    public int successes {get; set;} = 0;
+    public int fails {get; set;} = 0;
+
+    Random rnd {get; init;} = new Random();
+
+    private void postStep() {...}
+
+    private Offer chooseOffer(JobSite site) {...}
+
+    private bool applyToJob(Employee employee, JobSite site) {...}
+
+    private void jobSearchStep() {...}
+
+    private void simulationStep() {...}
+
+    public void simulate(int n = -1) {
+        view.simulationStart();
+        model.initSimulationState();
+        view.renderSimulation(n, ConsoleKey.Q, simulationStep);
+        view.simulationEnd();
+    }
+
+    // methods for simulation configuration
+    public void setHRNum(int n) { model.hrNum = n; }
+    public void setEmployeeNum(int n) { model.employeeNum = n; }
+    public void setOffersPerHR(int n) { model.offersPerHR = n; }
+    public void setSitesNum(int n) { model.sitesNum = n; }
+}
+```
+And this is how I integrated MVC into my simulation.
+
 # Simulating the hiring process in IT
 I chose to simulate the hiring process. For this purpose I thought of 9 classes that are related to the hiring process and one class that will perform the simulation.
 

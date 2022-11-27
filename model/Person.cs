@@ -4,15 +4,12 @@ public class Person : SimulationEntity {
     public int age { get; init; }
     public int yearsOfXP { get; init; }
 
-    public List<Project> projects { get; set; }
+    public List<Project> projects { get; set; } = new List<Project>();
     
     protected Person(string personFirstName,
                     string personLastName,
                     int personAge,
-                    int personYearsOfXP,
-                    string[] projectNames,
-                    string[] projectLanguages,
-                    string[] projectDomains) {
+                    int personYearsOfXP) {
                         
         firstName = personFirstName;
         lastName = personLastName;
@@ -20,12 +17,6 @@ public class Person : SimulationEntity {
         yearsOfXP = personYearsOfXP;
 
         projects = new List<Project>();
-
-        if (projectNames != null && projectNames.Length > 0 &&
-            projectLanguages != null && projectLanguages.Length > 0 &&
-            projectDomains != null && projectDomains.Length > 0)
-
-                projects = Project.createListOfProjects(projectNames, projectLanguages, projectDomains);
     }
 
     private bool _checkAge() {

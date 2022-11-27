@@ -4,7 +4,7 @@ public class Skill : SelectionEntity {
 
     public Skill(string skillName, int skillRarity, bool skillIsHardSkill, string skillDomain)
             : base(skillName, skillDomain) {
-        // name = skillName;
+        name = skillName;
         rarity = skillRarity;
         isHardSkill = skillIsHardSkill;
     }
